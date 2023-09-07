@@ -1,4 +1,4 @@
-let peerConnection = new RTCPeerConnection()
+let myConnection = new RTCPeerConnection()
 let localStream;
 let remoteStream;
 
@@ -9,10 +9,10 @@ let init = async () => {
     document.getElementById('user-2').srcObject = remoteStream
 
     localStream.getTracks().forEach((track) => {
-        peerConnection.addTrack(track, localStream);
+        myConnection.addTrack(track, localStream);
     });
 
-    peerConnection.ontrack = (event) => {
+    myConnection.ontrack = (event) => {
         event.streams[0].getTracks().forEach((track) => {
         remoteStream.addTrack(track);
         });
@@ -22,41 +22,41 @@ let init = async () => {
 let createOffer = async () => {
 
 
-    peerConnection.onicecandidate = async (event) => {
+    myConnection.onicecandidate = async (event) => {
         // Event that fires off when a new offer ICE candidate is created
         if(event.candidate){
-            document.getElementById('offer-sdp').value = JSON.stringify(peerConnection.localDescription)
+            document.getElementById('offer-sdp').value = JSON.stringify(myConnection.localDescription)
         }
     };
 
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
+    const offer = await myConnection.createOffer();
+    await myConnection.setLocalDescription(offer);
 }
 
 let createAnswer = async () => {
 
     let offer = JSON.parse(document.getElementById('offer-sdp').value)
 
-    peerConnection.onicecandidate = async (event) => {
+    myConnection.onicecandidate = async (event) => {
         //Event that fires off when a new answer ICE candidate is created
         if(event.candidate){
             console.log('Adding answer candidate...:', event.candidate)
-            document.getElementById('answer-sdp').value = JSON.stringify(peerConnection.localDescription)
+            document.getElementById('answer-sdp').value = JSON.stringify(myConnection.localDescription)
         }
     };
 
-    await peerConnection.setRemoteDescription(offer);
+    await myConnection.setRemoteDescription(offer);
 
-    let answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer); 
+    let answer = await myConnection.createAnswer();
+    await myConnection.setLocalDescription(answer); 
 }
 
 let addAnswer = async () => {
     console.log('Add answer triggerd')
     let answer = JSON.parse(document.getElementById('answer-sdp').value)
     console.log('answer:', answer)
-    if (!peerConnection.currentRemoteDescription){
-        peerConnection.setRemoteDescription(answer);
+    if (!myConnection.currentRemoteDescription){
+        myConnection.setRemoteDescription(answer);
     }
 }
 
