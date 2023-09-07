@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>WebRTC 1</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+
+
+
+    <div id="videos">
+        <video class="video-player" id="user-1" autoplay playsinline></video>
+        <video class="video-player" id="user-2" autoplay playsinline></video>
+    </div>
+
+    <div class="step">
+        <p>USER 1: CREATE AN SDP REQUEST </p>
+        <button id="create-offer">Create Offer</button>
+    </div>
+
+    <label>SDP OFFER:</label>
+    <textarea id="offer-sdp" placeholder='User 2, paste SDP offer here...'></textarea>
+
+    <div class="step">
+        <p><strong>USER 2 : PASTE THE SDP AND CLICK CREATE ANSWER</p>
+        <button id="create-answer">Create answer</button>
+    </div>
+
+
+    <label>SDP ANSWER:</label>
+    <textarea id="answer-sdp" placeholder="User 1, paste SDP answer here..."></textarea>
+
+    <div class="step">
+        <p>USER 1 : PASTE ANSWER KEY AND CLICK ADD ANSWER</p>
+        <button id="add-answer">Add answer</button>
+    </div>
+
+</body>
+<script src='main.js'></script>
+</html>
